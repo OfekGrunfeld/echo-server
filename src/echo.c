@@ -7,7 +7,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include "../include/echo.h"
+#include <echo/echo.h>
 
 #ifndef CHUNK
 #define CHUNK (1 << 20) // 1 MB

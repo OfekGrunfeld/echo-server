@@ -4,9 +4,9 @@
 #include <sys/un.h>
 #include <unistd.h>
 
-#include "../include/args.h"
-#include "../include/echo.h"
-#include "../include/net.h"
+#include <echo/net.h>
+#include <echo/args.h>
+#include <echo/echo.h>
 
 #define LISTEN_BACKLOG 1
 #define CHUNK  65536
