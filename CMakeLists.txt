@@ -7,8 +7,8 @@ add_library(core
         src/args.c
 )
 target_include_directories(core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-
 add_executable(echo_server src/main.c)
-target_link_libraries(echo_server PRIVATE core)
-target_compile_features(echo_server PRIVATE c_std_17)
+
 target_compile_definitions(echo_server PRIVATE _GNU_SOURCE)
+target_compile_features(echo_server PRIVATE c_std_17)
+target_link_libraries(echo_server PRIVATE core)

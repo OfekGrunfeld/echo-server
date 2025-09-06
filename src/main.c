@@ -6,6 +6,7 @@
 
 #include <echo/net.h>
 #include <echo/args.h>
+#include <echo/echo.h>
 
 #define LISTEN_BACKLOG 1
 #define CHUNK  65536
