@@ -12,4 +12,3 @@ add_executable(echo_server src/main.c)
 target_compile_definitions(echo_server PRIVATE _GNU_SOURCE)
 target_compile_features(echo_server PRIVATE c_std_17)
 target_link_libraries(echo_server PRIVATE core)
-
