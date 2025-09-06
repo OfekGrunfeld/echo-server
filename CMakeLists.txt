@@ -7,4 +7,5 @@ add_executable(echo_server
         src/args.c
         src/main.c
         src/echo.c
+        src/net.c
 )
