@@ -1,16 +1,13 @@
-#define _GNU_SOURCE
-
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <sys/socket.h>
 #include <sys/un.h>
 #include <unistd.h>
 #include <arpa/inet.h>
-#include <fcntl.h>
 #include <stdbool.h>
 
 #include "args.h"
+#include "echo.h"
 
 #define LISTEN_BACKLOG 1
 #define CHUNK  65536
@@ -49,22 +46,8 @@ int main(const int argc, const char *argv[]) {
     if (client_fd < 0)
         handle_error("accept");
 
-    int p[2];
-    if (pipe(p) < 0)
-        handle_error("pipe");
+    int rc = echo_splice(client_fd);
+    close(client_fd); close(server_fd);
 
-    while (1) {
-        const ssize_t n = splice(client_fd, NULL, p[1], NULL, CHUNK, SPLICE_F_MOVE | SPLICE_F_MORE);
-        if (n == 0) break;
-
-        ssize_t written = 0;
-        while (written < n) {
-            const ssize_t m = splice(p[0], NULL, client_fd, NULL, n - written, SPLICE_F_MOVE | SPLICE_F_MORE);
-            written += m;
-        }
-    }
-    close(p[0]);
-    close(p[1]);
-    close(client_fd);
-    close(server_fd);
+    return (rc == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
