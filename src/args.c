@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "args.h"
+#include "../include/args.h"
 
 int parse_args(const int argc, const char *argv[], Args *out) {
     if (argc < 2) {
