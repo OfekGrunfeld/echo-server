@@ -22,9 +22,10 @@ int main(const int argc, const char *argv[]) {
     const int s_fd = net_listen_tcp_any(args.port, LISTEN_BACKLOG);
     if (s_fd < 0) return EXIT_FAILURE;
 
+    printf("Echo server listening on port %d\n", args.port);
+
     const int c_fd = net_accept(s_fd);
     if (c_fd < 0) return EXIT_FAILURE;
-
 
     const int rc = echo_splice(c_fd);
     close(c_fd);
