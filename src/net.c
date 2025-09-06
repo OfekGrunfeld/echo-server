@@ -5,7 +5,7 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
-#include "../include/net.h"
+#include <echo/net.h>
 
 int net_listen_tcp_any(const uint16_t port, const int backlog) {
     const int s_fd = socket(AF_INET, SOCK_STREAM, 0);
