@@ -12,26 +12,33 @@
 
 #define LISTEN_BACKLOG 1
 #define CHUNK  65536
-#define PORT 12347
 
 #define handle_error(msg) \
 do { perror(msg); exit(EXIT_FAILURE); } while (0)
 
-int main(void) {
+
+int main(const int argc, const char *argv[]) {
+    if (argc < 2) {
+        fprintf(stderr, "Usage: %s <number>\n", argv[0]);
+        return 1;
+    }
+
+    char *endptr;
+    const long port = strtol(argv[1], &endptr, 10);
+
     socklen_t client_address_size;
-    struct sockaddr_in server_address, client_address;
+    struct sockaddr_in server_address = {0}, client_address = {0};
 
     const int server_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (server_fd < 0)
         handle_error("socket");
 
     const bool one = true;
-    setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &one , sizeof(one));
+    setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &one, sizeof(one));
 
-    struct sockaddr_in addr = {0};
     server_address.sin_family = AF_INET;
     server_address.sin_addr.s_addr = htonl(INADDR_ANY);
-    server_address.sin_port = htons(PORT);
+    server_address.sin_port = htons(port);
 
     if (bind(server_fd, (struct sockaddr *) &server_address, sizeof(server_address)))
         handle_error("bind");
